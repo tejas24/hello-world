@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: Associate-Management-System
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;database=MyDb
+    username: tejas
+    password: tejas@123
+    tomcat:
+      max-active: 250
+      min-idle: 100
+      max-idle: 150
+      initial-size: 100
+      max-wait: 60000
+  cache:
+    ehcache:
+      config: config/ehcache-pulse.xml
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+server:
+  port: 8082
+  servlet:
+   context-path: /xyz-services
+logging:
+  file: D:/tejas.naringe/Associate-Management-System/services.log
+  level:
+    org.springframework.security: ERROR
+    org.springframework.web: ERROR
+    com.demo: DEBUG
+    springfox.documentation: ERROR
+accesscontrol:
+  allow:
+    origin: "*"
+    methods: "GET"
