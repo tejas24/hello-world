@@ -31,17 +31,19 @@ public class AssociateRepositoryImpl implements AssociateRepositoryCustom {
 	@Override
 	public void createAssociate(AssociatesDTO associatesDTO) {
 		
-		String name= associatesDTO.getName();
-		String sqlQuery = "insert into dbo.Associates (name, phone, address, specialization) values (?,?,?,?)";
-
+		/*String name= associatesDTO.getName();
+		String phone= associatesDTO.getPhone();
+		String address= associatesDTO.getAddress();
+		String specialization= associatesDTO.getSpecialization();
+		String sqlQuery = "insert into dbo.Associates (name, phone, address, specialization) values (:name,:phone,:address,:specialization)";
 		Query query = em.createNativeQuery(sqlQuery, AssociatesDTO.class);
 		query.setParameter("name", name);
 		query.setParameter("phone", phone);
 		query.setParameter("address", address);
-		query.setParameter("specialization", specialization);
-		List<Associates> result = query.getResultList();
+		query.setParameter("specialization", specialization);*/
 		
-		
+		em.persist(associatesDTO);
+	
 	}
 
 

@@ -52,9 +52,10 @@ public class AssociateManagerImpl implements AssociateManager {
 	}
 
 	@Override
-	public void createAssociate(AssociatesDTO associatesDTO) throws Exception {
+	public void createAssociate(Associates associates) throws Exception {
 		LOG.info("creating the Associates details");
-		associateRepository.createAssociate(associatesDTO);
+		//associateRepository.createAssociate(associatesDTO);
+		associateRepository.save(associates);
 	}
 
 }

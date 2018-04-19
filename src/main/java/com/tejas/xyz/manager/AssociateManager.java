@@ -16,6 +16,6 @@ public interface AssociateManager {
 	
 	public List<Associates> getAssociatesList(String name,String specialization) throws Exception;
 	
-	public void createAssociate(AssociatesDTO associatesDTO) throws Exception;
+	public void createAssociate(Associates associates) throws Exception;
 
 }
