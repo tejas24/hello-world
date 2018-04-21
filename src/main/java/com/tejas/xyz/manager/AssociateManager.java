@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.tejas.xyz.data.entities.Associates;
-import com.tejas.xyz.data.entities.AssociatesDTO;
 
 public interface AssociateManager {
 
@@ -13,9 +12,11 @@ public interface AssociateManager {
 	public Optional<Associates> getAssociate(Long id) throws Exception;
 
 	public void deleteAssociate(Long id) throws Exception;
-	
-	public List<Associates> getAssociatesList(String name,String specialization) throws Exception;
-	
+
+	public List<Associates> getAssociatesList(String name, String specialization) throws Exception;
+
 	public void createAssociate(Associates associates) throws Exception;
+
+	public void updateAssociate(Associates associates,Long id) throws Exception;
 
 }

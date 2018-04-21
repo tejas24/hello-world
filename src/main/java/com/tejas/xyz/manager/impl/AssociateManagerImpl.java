@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tejas.xyz.data.entities.Associates;
-import com.tejas.xyz.data.entities.AssociatesDTO;
 import com.tejas.xyz.data.repositories.AssociateRepository;
 import com.tejas.xyz.manager.AssociateManager;
 
@@ -54,7 +53,13 @@ public class AssociateManagerImpl implements AssociateManager {
 	@Override
 	public void createAssociate(Associates associates) throws Exception {
 		LOG.info("creating the Associates details");
-		//associateRepository.createAssociate(associatesDTO);
+		associateRepository.save(associates);
+	}
+
+	@Override
+	public void updateAssociate(Associates associates, Long id) throws Exception {
+		LOG.info("creating the Associates details");
+		associates.setId(id);
 		associateRepository.save(associates);
 	}
 
