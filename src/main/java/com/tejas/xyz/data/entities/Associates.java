@@ -1,22 +1,31 @@
 package com.tejas.xyz.data.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-//@Table(name = "Associates", schema = "dbo")
+@Table(name = "Associates", schema = "dbo")
 public class Associates implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "associateid")
+	@Column(name = "id")
+	//@JsonIgnore
 	private Long id;
 	@Column(name = "name")
 	private String name;
@@ -26,7 +35,22 @@ public class Associates implements Serializable {
 	private String address;
 	//@Column(name = "specialization")
 	//private String specialization;
-	private Specialization specialization;
+	@OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            mappedBy = "associates")
+	private List<Specialization> specialization;
+	
+	
+	public Associates( ) {
+	}
+
+	public Associates( String name, String phone, String address, List<Specialization> specialization) {
+		super();
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+		this.specialization = specialization;
+	}
 
 	public Long getId() {
 		return id;
@@ -60,17 +84,14 @@ public class Associates implements Serializable {
 		this.address = address;
 	}
 
-	/*public String getSpecialization() {
+	public List<Specialization> getSpecialization() {
 		return specialization;
 	}
 
-	public void setSpecialization(String specialization) {
+	public void setSpecialization(List<Specialization> specialization) {
 		this.specialization = specialization;
-	}*/
-
-	@Override
-	public String toString() {
-		return "Associates [id=" + id + ", name=" + name + ", phone=" + phone + ", address=" + address
-				+ ", specialization=" + specialization + "]";
 	}
+
+	
+	
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tejas.xyz.data.entities.Associates;
+import com.tejas.xyz.data.entities.Specialization;
 import com.tejas.xyz.manager.AssociateManager;
 import com.tejas.xyz.manager.SpecializationManager;
 
@@ -73,7 +74,13 @@ public class AssociateController {
 			// throw new Exception("Unable to fetch associates details by id = " + id);
 			return new ResponseEntity<Optional<Associates>>(HttpStatus.NOT_FOUND);
 		}
+		Optional<Specialization> result1 = specializationManager.getSpecialization(id);
+		if (!result1.isPresent()) {
+			// throw new Exception("Unable to fetch associates details by id = " + id);
+			return new ResponseEntity<Optional<Specialization>>(HttpStatus.NOT_FOUND);
+		}
 		asssociateManager.deleteAssociate(id);
+		specializationManager.deleteSpecialization(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
