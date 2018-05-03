@@ -2,6 +2,7 @@ package com.tejas.xyz.manager.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tejas.xyz.data.entities.Associates;
+import com.tejas.xyz.data.entities.AssociatesDTO;
+import com.tejas.xyz.data.entities.Specialization;
 import com.tejas.xyz.data.repositories.AssociateRepository;
 import com.tejas.xyz.manager.AssociateManager;
 
@@ -23,7 +26,9 @@ public class AssociateManagerImpl implements AssociateManager {
 	@Override
 	public List<Associates> getAllAssociatesList() throws Exception {
 		LOG.info("Fetching all the Associates details");
-		return (List<Associates>) associateRepository.findAll();
+		List<Associates> associatesList =  (List<Associates>) associateRepository.findAll();
+		//return (List<Associates>) associateRepository.findAll();
+		return associatesList;
 	}
 
 	@Override
@@ -59,7 +64,7 @@ public class AssociateManagerImpl implements AssociateManager {
 	@Override
 	public void updateAssociate(Associates associates, Long id) throws Exception {
 		LOG.info("creating the Associates details");
-		associates.setId(id);
+		associates.setAssociateId(id);
 		associateRepository.save(associates);
 	}
 

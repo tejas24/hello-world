@@ -1,7 +1,7 @@
 package com.tejas.xyz.data.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,40 +23,36 @@ public class Associates implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	//@JsonIgnore
-	private Long id;
+	@Column(name = "associateid")
+	private Long associateId;
 	@Column(name = "name")
 	private String name;
 	@Column(name = "phone")
 	private String phone;
 	@Column(name = "address")
 	private String address;
-	//@Column(name = "specialization")
-	//private String specialization;
-	@OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
-            mappedBy = "associates")
-	private List<Specialization> specialization;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "associates")
+	private Set<Specialization> specialization;
 	
-	
-	public Associates( ) {
+	public Associates() {
+		 super();
 	}
 
-	public Associates( String name, String phone, String address, List<Specialization> specialization) {
+	public Associates(Long associateId, String name, String phone, String address, Set<Specialization> specialization) {
 		super();
+		this.associateId = associateId;
 		this.name = name;
 		this.phone = phone;
 		this.address = address;
 		this.specialization = specialization;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getAssociateId() {
+		return associateId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setAssociateId(Long associateId) {
+		this.associateId = associateId;
 	}
 
 	public String getName() {
@@ -84,14 +79,18 @@ public class Associates implements Serializable {
 		this.address = address;
 	}
 
-	public List<Specialization> getSpecialization() {
+	public Set<Specialization> getSpecialization() {
 		return specialization;
 	}
 
-	public void setSpecialization(List<Specialization> specialization) {
+	public void setSpecialization(Set<Specialization> specialization) {
 		this.specialization = specialization;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Associates [associateId=" + associateId + ", name=" + name + ", phone=" + phone + ", address=" + address
+				+ ", specialization=" + specialization + "]";
+	}
 	
 }

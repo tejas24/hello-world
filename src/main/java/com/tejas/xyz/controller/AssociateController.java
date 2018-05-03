@@ -1,7 +1,9 @@
 package com.tejas.xyz.controller;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +47,31 @@ public class AssociateController {
 		if (result == null) {
 			throw new Exception("Unable to fetch associates details");
 		}
-		return new ResponseEntity<List<Associates>>(result, HttpStatus.OK);
+		/*for (Associates associates : result) {
+			if (associates.getSpecialization().isEmpty()) {
+				associates.getSpecialization().clear();
+			}
+		}
+		for (Associates associates : result) {
+			System.out.println("*** Associates Details ***");
+
+			System.out.println("Associates Id   : " + associates.getAssociateId());
+			System.out.println("Associates Name : " + associates.getName());
+			System.out.println("Associates Phone : " + associates.getPhone());
+			System.out.println("Associates Address : " + associates.getAddress());
+
+			Set<Specialization> specializationSet = associates.getSpecialization();
+			if (!specializationSet.isEmpty()) {
+				System.out.println("*** Associates Specialization Details ***");
+				for (Specialization specialization : specializationSet) {
+
+					System.out.println("Specialization Name  : " + specialization.getName());
+				}
+			}
+		}*/
+		//List<Associates> result1 = new ArrayList<>();
+		//return new ResponseEntity<List<Associates>>(result1, HttpStatus.OK);
+		 return new ResponseEntity<List<Associates>>(result, HttpStatus.OK);
 		// return new ResponseEntity(new AssociatesDTO(result, result1), HttpStatus.OK);
 	}
 
@@ -74,13 +100,13 @@ public class AssociateController {
 			// throw new Exception("Unable to fetch associates details by id = " + id);
 			return new ResponseEntity<Optional<Associates>>(HttpStatus.NOT_FOUND);
 		}
-		Optional<Specialization> result1 = specializationManager.getSpecialization(id);
+		/*Optional<Specialization> result1 = specializationManager.getSpecialization(id);
 		if (!result1.isPresent()) {
 			// throw new Exception("Unable to fetch associates details by id = " + id);
 			return new ResponseEntity<Optional<Specialization>>(HttpStatus.NOT_FOUND);
-		}
+		}*/
 		asssociateManager.deleteAssociate(id);
-		specializationManager.deleteSpecialization(id);
+		//specializationManager.deleteSpecialization(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
@@ -102,13 +128,26 @@ public class AssociateController {
 	@RequestMapping(value = "/associates", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody ResponseEntity<?> createAssociate(@RequestBody Associates associates) throws Exception {
 		LOG.info("REST call to create the associates details ");
+		
+		//Associates associates1 = new Associates();
+		//associates1.setSpecialization(specialization);
 		asssociateManager.createAssociate(associates);
+		
+		
+		/*List<Associates> result = asssociateManager.getAllAssociatesList();
+		for (Associates associatesData : result) {
+			
+			associatesData.getAssociateId();
+		}*/
+		
+		
+		
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
 
 	@ApiOperation(value = "Update an Asociate", notes = "Update an Asociate")
 	@RequestMapping(value = "/associates/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody ResponseEntity<?> updateAssociate(@RequestBody Associates associates,
+	public @ResponseBody ResponseEntity<?> updateAssociate(@RequestBody Associates associates,//@RequestBody Specialization specialization,
 			@PathVariable("id") Long id) throws Exception {
 		LOG.info("REST call to create the associates details ");
 		Optional<Associates> result = asssociateManager.getAssociate(id);
@@ -119,7 +158,9 @@ public class AssociateController {
 			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("Associate not found with id=" + id);
 		}
+		
 		asssociateManager.updateAssociate(associates, id);
+		//specializationManager.updateSpecialization(specialization, id);
 		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 	}
 }
