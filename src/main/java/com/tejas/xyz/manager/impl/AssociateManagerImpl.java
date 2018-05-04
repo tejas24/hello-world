@@ -39,10 +39,11 @@ public class AssociateManagerImpl implements AssociateManager {
 
 	@Override
 	public void deleteAssociate(Long id) throws Exception {
-		LOG.info("deleteing  the Associates details by id");
+		LOG.info("deleteing  the Associates details by id = "+ id);
 
 		try {
 			associateRepository.deleteById(id);
+			LOG.info("deleted  the Associates details by id = "+ id);
 		} catch (Exception e) {
 			LOG.error("unable to find associate with id = " + id);
 			// e.printStackTrace();
@@ -68,7 +69,11 @@ public class AssociateManagerImpl implements AssociateManager {
 	@Override
 	public void updateAssociate(Associates associates, Long id) throws Exception {
 		LOG.info("creating the Associates details");
-		associates.setAssociateId(id);
+		//associates.setAssociateId(id);
+		for (Specialization s : associates.getSpecialization()) {
+			associates.setAssociateId(id);
+			s.getAssociates();
+		}
 		associateRepository.save(associates);
 	}
 

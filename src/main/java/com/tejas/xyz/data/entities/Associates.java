@@ -31,7 +31,7 @@ public class Associates implements Serializable {
 	private String phone;
 	@Column(name = "address")
 	private String address;
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "associates")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "associates")
 	private Set<Specialization> specialization;
 	
 	public Associates() {

@@ -44,8 +44,9 @@ public class AssociateController {
 	public @ResponseBody ResponseEntity<List<Associates>> getAllAssociatesDetails() throws Exception {
 		LOG.info("REST call to get all the associates details");
 		List<Associates> result = asssociateManager.getAllAssociatesList();
-		if (result == null) {
-			throw new Exception("Unable to fetch associates details");
+		if (result.isEmpty()) {
+			//throw new Exception("Unable to fetch associates details");
+			return new ResponseEntity<List<Associates>>(HttpStatus.NOT_FOUND);
 		}
 		/*
 		 * for (Associates associates : result) { if
@@ -91,7 +92,7 @@ public class AssociateController {
 	@ApiOperation(value = "Delete an Associate", notes = "Delete an Associate")
 	@RequestMapping(value = "/associates/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody ResponseEntity<?> deleteAssociateDetails(@PathVariable("id") Long id) throws Exception {
-		LOG.info("REST call to delete the associates details by id");
+		LOG.info("REST call to delete the associates details by id = " + id);
 		Optional<Associates> result = asssociateManager.getAssociate(id);
 		if (!result.isPresent()) {
 			// throw new Exception("Unable to fetch associates details by id = " + id);
@@ -137,16 +138,13 @@ public class AssociateController {
 
 	@ApiOperation(value = "Update an Asociate", notes = "Update an Asociate")
 	@RequestMapping(value = "/associates/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody ResponseEntity<?> updateAssociate(@RequestBody Associates associates, // @RequestBody
-																								// Specialization
-																								// specialization,
+	public @ResponseBody ResponseEntity<?> updateAssociate(@RequestBody Associates associates,
 			@PathVariable("id") Long id) throws Exception {
 		LOG.info("REST call to create the associates details ");
 		Optional<Associates> result = asssociateManager.getAssociate(id);
 		if (!result.isPresent()) {
 			// throw new Exception("Unable to fetch associates details by id = " + id);
-			// return new ResponseEntity(new Exception("Unable to fetch associates details
-			// by id = " + id).getMessage(),HttpStatus.NOT_FOUND);
+			// return new ResponseEntity(new Exception("Unable to fetch associates details by id = " + id).getMessage(),HttpStatus.NOT_FOUND);
 			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("Associate not found with id=" + id);
 		}
