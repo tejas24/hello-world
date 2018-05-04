@@ -58,6 +58,10 @@ public class AssociateManagerImpl implements AssociateManager {
 	@Override
 	public void createAssociate(Associates associates) throws Exception {
 		LOG.info("creating the Associates details");
+		// associates.getAssociateId();
+		for (Specialization s : associates.getSpecialization()) {
+			s.setAssociates(associates);
+		}
 		associateRepository.save(associates);
 	}
 

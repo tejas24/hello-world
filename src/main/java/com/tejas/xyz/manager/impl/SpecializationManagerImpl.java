@@ -41,7 +41,7 @@ public class SpecializationManagerImpl implements SpecializationManager {
 	@Override
 	public void updateSpecialization(Specialization specialization, Long id) throws Exception {
 		LOG.info("creating the Specializations details");
-		specialization.setAssociateId(id);
+		//specialization.setAssociateId(id);
 		specializationRepository.save(specialization);
 	}
 

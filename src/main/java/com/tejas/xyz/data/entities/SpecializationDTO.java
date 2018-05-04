@@ -2,25 +2,16 @@ package com.tejas.xyz.data.entities;
 
 public class SpecializationDTO {
 
-	private Long AssociateId;
+	// private Long AssociateId;
 	private String name;
 
 	public SpecializationDTO() {
 		super();
 	}
 
-	public SpecializationDTO(Long associateId, String name) {
+	public SpecializationDTO(String name) {
 		super();
-		AssociateId = associateId;
 		this.name = name;
-	}
-
-	public Long getAssociateId() {
-		return AssociateId;
-	}
-
-	public void setAssociateId(Long associateId) {
-		AssociateId = associateId;
 	}
 
 	public String getName() {
