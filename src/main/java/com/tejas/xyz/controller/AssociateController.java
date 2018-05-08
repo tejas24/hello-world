@@ -1,9 +1,7 @@
 package com.tejas.xyz.controller;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tejas.xyz.data.entities.Associates;
-import com.tejas.xyz.data.entities.Specialization;
 import com.tejas.xyz.manager.AssociateManager;
-import com.tejas.xyz.manager.SpecializationManager;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -70,7 +66,7 @@ public class AssociateController {
 		// return new ResponseEntity(new AssociatesDTO(result, result1), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Get an Asociate Details by Id ", notes = "Get an Asociate Details by Id")
+	@ApiOperation(value = "Get an Associate Details by Id ", notes = "Get an Associate Details by Id")
 	@RequestMapping(value = "/associates/{id}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody ResponseEntity<Optional<Associates>> getAssociatesDetails(@PathVariable("id") Long id)
 			throws Exception {
@@ -107,13 +103,25 @@ public class AssociateController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
-	@ApiOperation(value = "Search an Asociate Details", notes = "Search an Asociate Details")
-	@RequestMapping(value = "/associates/search", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody ResponseEntity<List<Associates>> getAssociateDetails(@RequestParam("name") String name,
-			@RequestParam(value = "specialization", defaultValue = "none") String specialization) throws Exception {
-		LOG.info("REST call to get the associates details by name and specialization");
+	@ApiOperation(value = "Search an Associate Details by name", notes = "Search an Associate Details by name")
+	@RequestMapping(value = "/associates/name", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody ResponseEntity<List<Associates>> getAssociateDetails(@RequestParam("name") String name) throws Exception {
+		LOG.info("REST call to get the associates details by name");
 
-		List<Associates> result = asssociateManager.getAssociatesList(name, specialization);
+		List<Associates> result = asssociateManager.getAssociatesList(name);
+		if (result.isEmpty()) {
+			// throw new Exception("Unable to fetch associates details by name = " + name);
+			return new ResponseEntity<List<Associates>>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<List<Associates>>(result, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "Search an Associate Details by specialization", notes = "Search an Associate Details by specialization")
+	@RequestMapping(value = "/associates/specialization", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody ResponseEntity<List<Associates>> getAssociateDetailsBySpecializationc(@RequestParam(value = "specialization") String specialization) throws Exception {
+		LOG.info("REST call to get the associates details by specialization");
+
+		List<Associates> result = asssociateManager.getAssociatesListBySpecialization( specialization);
 		if (result.isEmpty()) {
 			// throw new Exception("Unable to fetch associates details by name = " + name);
 			return new ResponseEntity<List<Associates>>(HttpStatus.BAD_REQUEST);
@@ -121,7 +129,7 @@ public class AssociateController {
 		return new ResponseEntity<List<Associates>>(result, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Create an Asociate Details", notes = "Create an Asociate Details")
+	@ApiOperation(value = "Create an Associate Details", notes = "Create an Associate Details")
 	@RequestMapping(value = "/associates", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody ResponseEntity<?> createAssociate(@RequestBody Associates associates) throws Exception {
 		LOG.info("REST call to create the associates details ");
@@ -134,7 +142,7 @@ public class AssociateController {
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
 
-	@ApiOperation(value = "Update an Asociate Details", notes = "Update an Asociate Details")
+	@ApiOperation(value = "Update an Associate Details", notes = "Update an Associate Details")
 	@RequestMapping(value = "/associates/{id}", method = RequestMethod.PUT, produces = "application/json")
 	public @ResponseBody ResponseEntity<?> updateAssociate(@RequestBody Associates associates,
 			@PathVariable("id") Long id) throws Exception {

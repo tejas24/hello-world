@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tejas.xyz.data.entities.Associates;
 import com.tejas.xyz.data.entities.Specialization;
 import com.tejas.xyz.data.repositories.SpecializationRepository;
 import com.tejas.xyz.manager.SpecializationManager;

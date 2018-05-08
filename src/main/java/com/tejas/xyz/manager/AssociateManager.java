@@ -13,12 +13,14 @@ public interface AssociateManager {
 
 	public void deleteAssociate(Long id) throws Exception;
 
-	public List<Associates> getAssociatesList(String name, String specialization) throws Exception;
+	public List<Associates> getAssociatesList(String name) throws Exception;
 
 	public void createAssociate(Associates associates) throws Exception;
 
 	public void updateAssociate(Associates associates,Long id) throws Exception;
 	
 	public boolean existsAssociate(Long id) throws Exception;
+
+	public List<Associates> getAssociatesListBySpecialization(String specialization);
 
 }

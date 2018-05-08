@@ -6,6 +6,8 @@ import com.tejas.xyz.data.entities.Associates;
 
 public interface AssociateRepositoryCustom {
 
-	List<Associates> findAssociatesData(String name,String specialization);
+	List<Associates> findAssociatesData(String name);
+	
+	List<Associates> findAssociatesDataBySpecialization(String specialization);
 		
 }

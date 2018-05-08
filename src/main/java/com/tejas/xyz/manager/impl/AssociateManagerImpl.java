@@ -1,9 +1,7 @@
 package com.tejas.xyz.manager.impl;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tejas.xyz.data.entities.Associates;
-import com.tejas.xyz.data.entities.AssociatesDTO;
 import com.tejas.xyz.data.entities.Specialization;
 import com.tejas.xyz.data.repositories.AssociateRepository;
-import com.tejas.xyz.data.repositories.SpecializationRepository;
 import com.tejas.xyz.manager.AssociateManager;
 
 @Service
@@ -23,9 +19,6 @@ public class AssociateManagerImpl implements AssociateManager {
 	@Autowired
 	private AssociateRepository associateRepository;
 	
-	@Autowired
-	private SpecializationRepository specializationRepository;
-
 	private static final Logger LOG = LoggerFactory.getLogger(AssociateManagerImpl.class);
 
 	@Override
@@ -56,9 +49,9 @@ public class AssociateManagerImpl implements AssociateManager {
 	}
 
 	@Override
-	public List<Associates> getAssociatesList(String name, String specialization) throws Exception {
-		LOG.info("fetching the Associates details by name and specialization");
-		return associateRepository.findAssociatesData(name, specialization);
+	public List<Associates> getAssociatesList(String name) throws Exception {
+		LOG.info("fetching the Associates details by name");
+		return associateRepository.findAssociatesData(name);
 	}
 
 	@Override
@@ -90,5 +83,11 @@ public class AssociateManagerImpl implements AssociateManager {
 	public boolean existsAssociate(Long id) throws Exception {
 		LOG.info("checking if the Associates details exists");
 		return associateRepository.existsById(id);
+	}
+
+	@Override
+	public List<Associates> getAssociatesListBySpecialization(String specialization) {
+		LOG.info("fetching the Associates details by specialization");
+		return associateRepository.findAssociatesDataBySpecialization( specialization);
 	}
 }
