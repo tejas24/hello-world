@@ -36,10 +36,7 @@ public class AssociateController {
 	@Autowired
 	private AssociateManager asssociateManager;
 
-	@Autowired
-	private SpecializationManager specializationManager;
-
-	@ApiOperation(value = "Get All Asociates", notes = "Get All Asociates")
+	@ApiOperation(value = "Get All Asociates Details", notes = "Get All Asociates Details")
 	@RequestMapping(value = "/associates", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody ResponseEntity<List<Associates>> getAllAssociatesDetails() throws Exception {
 		LOG.info("REST call to get all the associates details");
@@ -73,7 +70,7 @@ public class AssociateController {
 		// return new ResponseEntity(new AssociatesDTO(result, result1), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Get Asociate by Id", notes = "Get Asociate by Id")
+	@ApiOperation(value = "Get an Asociate Details by Id ", notes = "Get an Asociate Details by Id")
 	@RequestMapping(value = "/associates/{id}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody ResponseEntity<Optional<Associates>> getAssociatesDetails(@PathVariable("id") Long id)
 			throws Exception {
@@ -89,12 +86,13 @@ public class AssociateController {
 		// return new ResponseEntity(new AssociatesDTO(result, result1), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Delete an Associate", notes = "Delete an Associate")
+	@ApiOperation(value = "Delete an Associate Details", notes = "Delete an Associate Details")
 	@RequestMapping(value = "/associates/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody ResponseEntity<?> deleteAssociateDetails(@PathVariable("id") Long id) throws Exception {
 		LOG.info("REST call to delete the associates details by id = " + id);
-		Optional<Associates> result = asssociateManager.getAssociate(id);
-		if (!result.isPresent()) {
+		//Optional<Associates> result = asssociateManager.getAssociate(id);
+		//if (!result.isPresent()) {
+		if (!asssociateManager.existsAssociate(id)) {
 			// throw new Exception("Unable to fetch associates details by id = " + id);
 			return new ResponseEntity<Optional<Associates>>(HttpStatus.NOT_FOUND);
 		}
@@ -109,10 +107,10 @@ public class AssociateController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
-	@ApiOperation(value = "Search an Asociate", notes = "Search an Asociate")
+	@ApiOperation(value = "Search an Asociate Details", notes = "Search an Asociate Details")
 	@RequestMapping(value = "/associates/search", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody ResponseEntity<List<Associates>> getAssociateDetails(@RequestParam("name") String name,
-			@RequestParam("specialization") String specialization) throws Exception {
+			@RequestParam(value = "specialization", defaultValue = "none") String specialization) throws Exception {
 		LOG.info("REST call to get the associates details by name and specialization");
 
 		List<Associates> result = asssociateManager.getAssociatesList(name, specialization);
@@ -123,7 +121,7 @@ public class AssociateController {
 		return new ResponseEntity<List<Associates>>(result, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Create an Asociate", notes = "Create an Asociate")
+	@ApiOperation(value = "Create an Asociate Details", notes = "Create an Asociate Details")
 	@RequestMapping(value = "/associates", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody ResponseEntity<?> createAssociate(@RequestBody Associates associates) throws Exception {
 		LOG.info("REST call to create the associates details ");
@@ -136,15 +134,16 @@ public class AssociateController {
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
 
-	@ApiOperation(value = "Update an Asociate", notes = "Update an Asociate")
+	@ApiOperation(value = "Update an Asociate Details", notes = "Update an Asociate Details")
 	@RequestMapping(value = "/associates/{id}", method = RequestMethod.PUT, produces = "application/json")
 	public @ResponseBody ResponseEntity<?> updateAssociate(@RequestBody Associates associates,
 			@PathVariable("id") Long id) throws Exception {
-		LOG.info("REST call to create the associates details ");
+		LOG.info("REST call to update the associates details ");
 		Optional<Associates> result = asssociateManager.getAssociate(id);
 		if (!result.isPresent()) {
 			// throw new Exception("Unable to fetch associates details by id = " + id);
-			// return new ResponseEntity(new Exception("Unable to fetch associates details by id = " + id).getMessage(),HttpStatus.NOT_FOUND);
+			// return new ResponseEntity(new Exception("Unable to fetch associates details
+			// by id = " + id).getMessage(),HttpStatus.NOT_FOUND);
 			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("Associate not found with id=" + id);
 		}

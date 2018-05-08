@@ -24,12 +24,19 @@ public class AssociateManagementSystemApplication {
 
 	@Bean
 	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2).groupName("Associate Management System APIs").select()
-				.apis(RequestHandlerSelectors.any()).paths(PathSelectors.any()).build()
-				.genericModelSubstitutes(ResponseEntity.class).apiInfo(apiInfo());
+		return new Docket(DocumentationType.SWAGGER_2)
+				.groupName("Associate Management System APIs")
+				.select()
+				.apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.any())
+				.build()
+				.genericModelSubstitutes(ResponseEntity.class)
+				.apiInfo(apiInfo());
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Associate Management System APIs").build();
+		return new ApiInfoBuilder()
+				.title("Associate Management System APIs")
+				.build();
 	}
 }

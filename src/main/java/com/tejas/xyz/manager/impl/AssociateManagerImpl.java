@@ -1,5 +1,6 @@
 package com.tejas.xyz.manager.impl;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -13,6 +14,7 @@ import com.tejas.xyz.data.entities.Associates;
 import com.tejas.xyz.data.entities.AssociatesDTO;
 import com.tejas.xyz.data.entities.Specialization;
 import com.tejas.xyz.data.repositories.AssociateRepository;
+import com.tejas.xyz.data.repositories.SpecializationRepository;
 import com.tejas.xyz.manager.AssociateManager;
 
 @Service
@@ -20,6 +22,9 @@ public class AssociateManagerImpl implements AssociateManager {
 
 	@Autowired
 	private AssociateRepository associateRepository;
+	
+	@Autowired
+	private SpecializationRepository specializationRepository;
 
 	private static final Logger LOG = LoggerFactory.getLogger(AssociateManagerImpl.class);
 
@@ -53,13 +58,12 @@ public class AssociateManagerImpl implements AssociateManager {
 	@Override
 	public List<Associates> getAssociatesList(String name, String specialization) throws Exception {
 		LOG.info("fetching the Associates details by name and specialization");
-		return associateRepository.findAssociatestData(name, specialization);
+		return associateRepository.findAssociatesData(name, specialization);
 	}
 
 	@Override
 	public void createAssociate(Associates associates) throws Exception {
 		LOG.info("creating the Associates details");
-		// associates.getAssociateId();
 		for (Specialization s : associates.getSpecialization()) {
 			s.setAssociates(associates);
 		}
@@ -68,13 +72,23 @@ public class AssociateManagerImpl implements AssociateManager {
 
 	@Override
 	public void updateAssociate(Associates associates, Long id) throws Exception {
-		LOG.info("creating the Associates details");
-		//associates.setAssociateId(id);
-		for (Specialization s : associates.getSpecialization()) {
-			associates.setAssociateId(id);
-			s.getAssociates();
+		LOG.info("updating the Associates details");
+		associates.setAssociateId(id);
+		if (associates.getSpecialization() != null) {
+			for (Specialization s : associates.getSpecialization()) {
+				s.setAssociates(associates);
+			}
 		}
+		/*for (Specialization s : associates.getSpecialization()) {
+			s.setAssociates(associates);
+			specializationRepository.save(s);
+		}*/
 		associateRepository.save(associates);
 	}
 
+	@Override
+	public boolean existsAssociate(Long id) throws Exception {
+		LOG.info("checking if the Associates details exists");
+		return associateRepository.existsById(id);
+	}
 }

@@ -18,5 +18,7 @@ public interface AssociateManager {
 	public void createAssociate(Associates associates) throws Exception;
 
 	public void updateAssociate(Associates associates,Long id) throws Exception;
+	
+	public boolean existsAssociate(Long id) throws Exception;
 
 }

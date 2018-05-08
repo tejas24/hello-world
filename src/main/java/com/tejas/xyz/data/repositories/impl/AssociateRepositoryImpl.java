@@ -17,19 +17,15 @@ public class AssociateRepositoryImpl implements AssociateRepositoryCustom {
 	private EntityManager em;
 
 	@Override
-	public List<Associates> findAssociatestData(String name, String specialization) {
-
-		// String sqlQuery = "select * from dbo.Associates where name = (:name) and
-		// specialization = (:specialization)";
-		// String sqlQuery = "select * from dbo.Associates where name LIKE
-		// CONCAT('%',:name,'%') and name LIKE CONCAT('%',:specialization,'%')";
-
-		String sqlQuery = "select a.Name,a.Phone,a.Address,s.name from dbo.Associates a inner join dbo.Specialization s where a.Name LIKE CONCAT('%',:name,'%')";// and s.name LIKE CONCAT('%',:specialization,'%')";
+	public List<Associates> findAssociatesData(String name, String specialization) {
+		String sqlQuery = "select * from dbo.Associates a where a.name LIKE CONCAT('%',:name,'%')";// and a.specialization LIKE CONCAT('%',:specialization,'%')";
+		//String sqlQuery = "select a.Name,a.Phone,a.Address,s.name from dbo.Associates a inner join dbo.Specialization s where a.name LIKE CONCAT('%',:name,'%') and s.name LIKE CONCAT('%',:specialization,'%')";
+		//String sqlQuery ="SELECT a, s  FROM dbo.Associates a, dbo.Specialization s WHERE a = s.associates";
+		//String sqlQuery = "select * from dbo.Associates a join a.Specialization as s where a.name LIKE CONCAT('%',:name,'%') and s.name LIKE CONCAT('%',:specialization,'%')";
 		Query query = em.createNativeQuery(sqlQuery, Associates.class);
 		query.setParameter("name", name);
-		//query.setParameter("name", specialization);
+		query.setParameter("specialization", specialization);
 		List<Associates> result = query.getResultList();
 		return result;
 	}
-
 }
