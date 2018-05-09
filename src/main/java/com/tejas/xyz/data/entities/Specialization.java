@@ -26,10 +26,6 @@ public class Specialization implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonIgnore
 	private Long id;
-	/*@JsonIgnore
-	@Transient
-	@Column(name = "associateid")
-	private Long AssociateId;*/
 	@Column(name = "name")
 	private String name;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -41,21 +37,13 @@ public class Specialization implements Serializable {
 		super();
 	}
 
-	/*public Specialization(Long id, Long associateId, String name, Associates associates) {
-		super();
-		this.id = id;
-		AssociateId = associateId;
-		this.name = name;
-		this.associates = associates;
-	}
-*/
 	public Specialization(Long id, String name, Associates associates) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.associates = associates;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -64,14 +52,6 @@ public class Specialization implements Serializable {
 		this.id = id;
 	}
 
-	/*public Long getAssociateId() {
-		return AssociateId;
-	}
-
-	public void setAssociateId(Long associateId) {
-		AssociateId = associateId;
-	}
-*/
 	public String getName() {
 		return name;
 	}

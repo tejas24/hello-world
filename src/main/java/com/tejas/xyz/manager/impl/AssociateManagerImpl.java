@@ -72,10 +72,6 @@ public class AssociateManagerImpl implements AssociateManager {
 				s.setAssociates(associates);
 			}
 		}
-		/*for (Specialization s : associates.getSpecialization()) {
-			s.setAssociates(associates);
-			specializationRepository.save(s);
-		}*/
 		associateRepository.save(associates);
 	}
 

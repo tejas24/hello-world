@@ -41,25 +41,28 @@ public class AssociateController {
 			//throw new Exception("Unable to fetch associates details");
 			return new ResponseEntity<List<Associates>>(HttpStatus.NOT_FOUND);
 		}
-		/*
-		 * for (Associates associates : result) { if
-		 * (associates.getSpecialization().isEmpty()) {
-		 * associates.getSpecialization().clear(); } } for (Associates associates :
-		 * result) { System.out.println("*** Associates Details ***");
-		 * 
-		 * System.out.println("Associates Id   : " + associates.getAssociateId());
-		 * System.out.println("Associates Name : " + associates.getName());
-		 * System.out.println("Associates Phone : " + associates.getPhone());
-		 * System.out.println("Associates Address : " + associates.getAddress());
-		 * 
-		 * Set<Specialization> specializationSet = associates.getSpecialization(); if
-		 * (!specializationSet.isEmpty()) {
-		 * System.out.println("*** Associates Specialization Details ***"); for
-		 * (Specialization specialization : specializationSet) {
-		 * 
-		 * System.out.println("Specialization Name  : " + specialization.getName()); } }
-		 * }
-		 */
+		/*for (Associates associates : result) {
+			if (associates.getSpecialization().isEmpty()) {
+				associates.getSpecialization().clear();
+			}
+		}
+		for (Associates associates : result) {
+			System.out.println("*** Associates Details ***");
+
+			System.out.println("Associates Id   : " + associates.getAssociateId());
+			System.out.println("Associates Name : " + associates.getName());
+			System.out.println("Associates Phone : " + associates.getPhone());
+			System.out.println("Associates Address : " + associates.getAddress());
+
+			Set<Specialization> specializationSet = associates.getSpecialization();
+			if (!specializationSet.isEmpty()) {
+				System.out.println("*** Associates Specialization Details ***");
+				for (Specialization specialization : specializationSet) {
+
+					System.out.println("Specialization Name  : " + specialization.getName());
+				}
+			}
+		}*/
 		// List<Associates> result1 = new ArrayList<>();
 		// return new ResponseEntity<List<Associates>>(result1, HttpStatus.OK);
 		return new ResponseEntity<List<Associates>>(result, HttpStatus.OK);
@@ -86,20 +89,11 @@ public class AssociateController {
 	@RequestMapping(value = "/associates/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody ResponseEntity<?> deleteAssociateDetails(@PathVariable("id") Long id) throws Exception {
 		LOG.info("REST call to delete the associates details by id = " + id);
-		//Optional<Associates> result = asssociateManager.getAssociate(id);
-		//if (!result.isPresent()) {
 		if (!asssociateManager.existsAssociate(id)) {
 			// throw new Exception("Unable to fetch associates details by id = " + id);
 			return new ResponseEntity<Optional<Associates>>(HttpStatus.NOT_FOUND);
 		}
-		/*
-		 * Optional<Specialization> result1 =
-		 * specializationManager.getSpecialization(id); if (!result1.isPresent()) { //
-		 * throw new Exception("Unable to fetch associates details by id = " + id);
-		 * return new ResponseEntity<Optional<Specialization>>(HttpStatus.NOT_FOUND); }
-		 */
 		asssociateManager.deleteAssociate(id);
-		// specializationManager.deleteSpecialization(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
@@ -135,10 +129,6 @@ public class AssociateController {
 		LOG.info("REST call to create the associates details ");
 		// associates.setSpecialization(associates.getSpecialization());
 		asssociateManager.createAssociate(associates);
-		/*
-		 * List<Associates> result = asssociateManager.getAllAssociatesList();
-		 * for(Associates associatesData : result) { associatesData.getAssociateId(); }
-		 */
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
 
@@ -147,16 +137,17 @@ public class AssociateController {
 	public @ResponseBody ResponseEntity<?> updateAssociate(@RequestBody Associates associates,
 			@PathVariable("id") Long id) throws Exception {
 		LOG.info("REST call to update the associates details ");
-		Optional<Associates> result = asssociateManager.getAssociate(id);
-		if (!result.isPresent()) {
+		//Optional<Associates> result = asssociateManager.getAssociate(id);
+		//if (!result.isPresent()) {
+		if (!asssociateManager.existsAssociate(id)) {
 			// throw new Exception("Unable to fetch associates details by id = " + id);
 			// return new ResponseEntity(new Exception("Unable to fetch associates details
 			// by id = " + id).getMessage(),HttpStatus.NOT_FOUND);
-			return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body("Associate not found with id=" + id);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			//return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.NOT_FOUND)
+				//	.body("Associate not found with id=" + id);
 		}
 		asssociateManager.updateAssociate(associates, id);
-		// specializationManager.updateSpecialization(specialization, id);
 		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 	}
 }
