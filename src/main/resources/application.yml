@@ -3,8 +3,11 @@ spring:
     name: Associate-Management-System
   datasource:
     url: jdbc:sqlserver://localhost:1433;database=MyDb
+    #url: jdbc:mysql://localhost:3306/tejas
     username: tejas
     password: tejas@123
+    #username: root
+    #password: root
     tomcat:
       max-active: 250
       min-idle: 100
@@ -19,6 +22,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.SQLServer2012Dialect
+        #dialect: org.hibernate.dialect.MySQL5Dialect
 server:
   port: 8082
   servlet:

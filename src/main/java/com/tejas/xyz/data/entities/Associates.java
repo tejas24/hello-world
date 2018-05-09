@@ -31,9 +31,9 @@ public class Associates implements Serializable {
 	private String address;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "associates")
 	private Set<Specialization> specialization;
-	
+
 	public Associates() {
-		 super();
+		super();
 	}
 
 	public Associates(Long associateId, String name, String phone, String address, Set<Specialization> specialization) {
@@ -90,5 +90,5 @@ public class Associates implements Serializable {
 		return "Associates [associateId=" + associateId + ", name=" + name + ", phone=" + phone + ", address=" + address
 				+ ", specialization=" + specialization + "]";
 	}
-	
+
 }
