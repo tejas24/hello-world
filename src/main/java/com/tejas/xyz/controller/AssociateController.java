@@ -1,6 +1,7 @@
 package com.tejas.xyz.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -148,6 +149,17 @@ public class AssociateController {
 				//	.body("Associate not found with id=" + id);
 		}
 		asssociateManager.updateAssociate(associates, id);
+		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+	}
+	@ApiOperation(value = "Partially Update Associate Details", notes = "Partially Update an Associate Details")
+	@RequestMapping(value = "/associates/{id}", method = RequestMethod.PATCH, produces = "application/json")
+	public @ResponseBody ResponseEntity<?> partialUpdateAssociate(@RequestBody Map<String, String> updates,
+			@PathVariable("id") Long id) throws Exception {
+		LOG.info("REST call to update the associates partial details ");
+		if (!asssociateManager.existsAssociate(id)) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		asssociateManager.partialUpdateAssociate(updates, id);
 		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 	}
 }

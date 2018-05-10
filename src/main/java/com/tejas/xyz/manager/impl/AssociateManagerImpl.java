@@ -1,7 +1,10 @@
 package com.tejas.xyz.manager.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,5 +88,27 @@ public class AssociateManagerImpl implements AssociateManager {
 	public List<Associates> getAssociatesListBySpecialization(String specialization) {
 		LOG.info("fetching the Associates details by specialization");
 		return associateRepository.findAssociatesDataBySpecialization( specialization);
+	}
+
+	@Override
+	public void partialUpdateAssociate(Map<String, String> updates, Long id) {
+		LOG.info("partially updating the Associates details");
+		Associates associates = new Associates();
+		associates.setAssociateId(id);
+		Optional<Associates> associatesData = associateRepository.findById(id);
+		associates.setName(associatesData.get().getName());
+		associates.setPhone(associatesData.get().getPhone());
+		associates.setAddress(associatesData.get().getAddress());
+		Set<Map.Entry<String, String>> st = updates.entrySet();
+		for (Map.Entry<String, String> me : st) {
+			if (me.getKey().equalsIgnoreCase("name")) {
+				associates.setName(me.getValue());
+			} else if (me.getKey().equalsIgnoreCase("phone")) {
+				associates.setPhone(me.getValue());
+			} else if (me.getKey().equalsIgnoreCase("address")) {
+				associates.setAddress(me.getValue());
+			}
+		}
+		associateRepository.save(associates);
 	}
 }
