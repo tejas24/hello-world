@@ -22,8 +22,8 @@ public interface AssociateManager {
 	
 	public boolean existsAssociate(Long id) throws Exception;
 
-	public List<Associates> getAssociatesListBySpecialization(String specialization);
+	public List<Associates> getAssociatesListBySpecialization(String specialization) throws Exception;
 
-	public void partialUpdateAssociate(Map<String, String> updates, Long id);
+	public void partialUpdateAssociate(Map<String, String> updates, Long id) throws Exception;
 
 }

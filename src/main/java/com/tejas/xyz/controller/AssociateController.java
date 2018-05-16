@@ -59,7 +59,6 @@ public class AssociateController {
 			if (!specializationSet.isEmpty()) {
 				System.out.println("*** Associates Specialization Details ***");
 				for (Specialization specialization : specializationSet) {
-
 					System.out.println("Specialization Name  : " + specialization.getName());
 				}
 			}
