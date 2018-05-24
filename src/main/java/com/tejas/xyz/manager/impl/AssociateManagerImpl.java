@@ -84,17 +84,17 @@ public class AssociateManagerImpl implements AssociateManager {
 	}
 
 	@Override
-	public List<Associates> getAssociatesListBySpecialization(String specialization) {
+	public List<Associates> getAssociatesListBySpecialization(String specialization) throws Exception {
 		LOG.info("fetching the Associates details by specialization");
 		return associateRepository.findAssociatesDataBySpecialization( specialization);
 	}
 
 	@Override
-	public void partialUpdateAssociate(Map<String, String> updates, Long id) {
+	public void partialUpdateAssociate(Map<String, String> updates, Long id) throws Exception {
 		LOG.info("partially updating the Associates details");
 		Associates associates = new Associates();
 		associates.setAssociateId(id);
-		Optional<Associates> associatesData = associateRepository.findById(id);
+		Optional<Associates> associatesData = getAssociate(id);
 		associates.setName(associatesData.get().getName());
 		associates.setPhone(associatesData.get().getPhone());
 		associates.setAddress(associatesData.get().getAddress());
