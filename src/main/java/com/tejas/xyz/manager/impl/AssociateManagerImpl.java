@@ -20,33 +20,30 @@ public class AssociateManagerImpl implements AssociateManager {
 
 	@Autowired
 	private AssociateRepository associateRepository;
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(AssociateManagerImpl.class);
 
 	@Override
 	public List<Associates> getAllAssociatesList() throws Exception {
 		LOG.info("Fetching all the Associates details");
-		List<Associates> associatesList =  (List<Associates>) associateRepository.findAll();
-		//return (List<Associates>) associateRepository.findAll();
-		return associatesList;
+		return (List<Associates>) associateRepository.findAll();
 	}
 
 	@Override
 	public Optional<Associates> getAssociate(Long id) throws Exception {
-		LOG.info("Fetching  the Associates details by id");
+		LOG.info("Fetching  the Associates details by id = {}", id);
 		return associateRepository.findById(id);
 	}
 
 	@Override
 	public void deleteAssociate(Long id) throws Exception {
-		LOG.info("deleteing  the Associates details by id = "+ id);
+		LOG.info("deleteing  the Associates details by id = {}" , id);
 
 		try {
 			associateRepository.deleteById(id);
-			LOG.info("deleted  the Associates details by id = "+ id);
+			LOG.info("deleted  the Associates details by id = {}" , id);
 		} catch (Exception e) {
-			LOG.error("unable to find associate with id = " + id);
-			// e.printStackTrace();
+			LOG.error("unable to find associate with id = {}" , id);
 		}
 	}
 
@@ -86,7 +83,7 @@ public class AssociateManagerImpl implements AssociateManager {
 	@Override
 	public List<Associates> getAssociatesListBySpecialization(String specialization) throws Exception {
 		LOG.info("fetching the Associates details by specialization");
-		return associateRepository.findAssociatesDataBySpecialization( specialization);
+		return associateRepository.findAssociatesDataBySpecialization(specialization);
 	}
 
 	@Override
@@ -95,9 +92,11 @@ public class AssociateManagerImpl implements AssociateManager {
 		Associates associates = new Associates();
 		associates.setAssociateId(id);
 		Optional<Associates> associatesData = getAssociate(id);
-		associates.setName(associatesData.get().getName());
-		associates.setPhone(associatesData.get().getPhone());
-		associates.setAddress(associatesData.get().getAddress());
+		if (associatesData.isPresent()) {
+			associates.setName(associatesData.get().getName());
+			associates.setPhone(associatesData.get().getPhone());
+			associates.setAddress(associatesData.get().getAddress());
+		}
 		Set<Map.Entry<String, String>> st = updates.entrySet();
 		for (Map.Entry<String, String> me : st) {
 			if (me.getKey().equalsIgnoreCase("name")) {

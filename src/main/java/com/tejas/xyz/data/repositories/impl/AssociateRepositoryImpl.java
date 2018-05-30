@@ -20,8 +20,7 @@ public class AssociateRepositoryImpl implements AssociateRepositoryCustom {
 		String sqlQuery = "select * from dbo.Associates a where a.name LIKE CONCAT('%',:name,'%')";
 		Query query = em.createNativeQuery(sqlQuery, Associates.class);
 		query.setParameter("name", name);
-		List<Associates> result = query.getResultList();
-		return result;
+		return query.getResultList();
 	}
 
 	@Override
@@ -29,7 +28,6 @@ public class AssociateRepositoryImpl implements AssociateRepositoryCustom {
 		String sqlQuery = "select a from Associates a inner join fetch a.specialization s where s.name LIKE CONCAT('%',:specialization,'%')";
 		Query query = em.createQuery(sqlQuery, Associates.class);
 		query.setParameter("specialization", specialization);
-		List<Associates> result = query.getResultList();
-		return result;
+		return query.getResultList();
 	}
 }
